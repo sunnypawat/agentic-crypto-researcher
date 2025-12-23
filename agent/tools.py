@@ -10,3 +10,10 @@ def get_market_data(symbol: str):
         "rsi": 65,
         "macd": "bullish"
     }
+
+def get_news(symbol: str):
+    return [
+        f"{symbol} sees increased institutional interest",
+        f"Analysts discuss {symbol} outlook"
+    ]
+
