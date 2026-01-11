@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
+function LoginInner() {
   const sp = useSearchParams();
   const next = useMemo(() => sp.get("next") || "/", [sp]);
   const [token, setToken] = useState("");
@@ -98,5 +98,27 @@ export default function LoginPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <main
+          style={{
+            minHeight: "100vh",
+            display: "grid",
+            placeItems: "center",
+            padding: 24,
+            opacity: 0.85,
+          }}
+        >
+          <div>Loading…</div>
+        </main>
+      }
+    >
+      <LoginInner />
+    </Suspense>
   );
 }
