@@ -40,3 +40,5 @@ README.private.md
 tmp/
 temp/
 *.tmp
+
+.next/
