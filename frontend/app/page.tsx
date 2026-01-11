@@ -99,7 +99,7 @@ export default function Page() {
       "Give me a quick report on BTC",
       "Summarize today's crypto market sentiment",
       "Explain RSI vs MACD in simple terms",
-      "Epstein coin performance? (DEX token example)",
+      "JUP coin performance? (DEX token example)",
     ],
     []
   );

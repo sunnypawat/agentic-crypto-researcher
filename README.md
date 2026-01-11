@@ -16,4 +16,3 @@ Backend (FastAPI) + frontend (Next.js) monorepo.
 
 - Backend: run `uvicorn api.main:app --reload`
 - Frontend: `cd frontend && npm run dev`
-
