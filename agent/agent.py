@@ -1,18 +1,58 @@
-from agent.tools import get_market_data, get_news
+from __future__ import annotations
 
-def run_agent(symbol: str):
-    market = get_market_data(symbol)
-    news = get_news(symbol)
+import json
+from datetime import datetime, timezone
+from typing import Any, Dict, Iterable, Optional
 
-    return f"""
-Crypto Research Report for {symbol}
+from agent.orchestrator import stream_research_sse as _stream
+from agent.prompts import CRYPTO_SYSTEM
 
-Market:
-- Price: ${market['price_usd']}
-- RSI: {market['rsi']}
-- MACD: {market['macd']}
 
-News:
-- {news[0]}
-- {news[1]}
-"""
+def stream_research_sse(query: str, session_id: Optional[str] = None, selection: Optional[Dict[str, Any]] = None) -> Iterable[str]:
+    """
+    Public streaming API used by FastAPI SSE endpoint.
+    """
+    return _stream(query, session_id=session_id, selection=selection)
+
+
+def run_research(query: str, session_id: Optional[str] = None, selection: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """
+    Non-streaming wrapper for /research.
+    We reuse the streaming loop and return the `final` JSON payload for consistency.
+    This avoids brittle regex parsing and keeps behavior aligned with the UI stream.
+    """
+    final_payload: Optional[Dict[str, Any]] = None
+
+    for chunk in stream_research_sse(query, session_id=session_id, selection=selection):
+        if "event: final" not in chunk:
+            continue
+        for line in chunk.splitlines():
+            if line.startswith("data:"):
+                data_str = line[len("data:") :].strip()
+                try:
+                    final_payload = json.loads(data_str)
+                except Exception:
+                    final_payload = None
+
+    if not final_payload:
+        return {
+            "query": query,
+            "symbol": "N/A",
+            "answer": "Unable to produce a report.",
+            "token_profile": {},
+            "technicals": {},
+            "news": {},
+            "sources": [],
+            "steps": [],
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "agent": {"framework": "error", "system_prompt": CRYPTO_SYSTEM},
+        }
+    return final_payload
+
+
+def run_agent(symbol_or_query: str) -> str:
+    """
+    Backwards-compatible entrypoint: returns the answer text.
+    """
+    report = run_research(symbol_or_query)
+    return report["answer"]

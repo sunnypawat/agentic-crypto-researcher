@@ -34,6 +34,7 @@ build/
 *.pem
 secrets/
 private/
+README.private.md
 
 # Temporary files
 tmp/
