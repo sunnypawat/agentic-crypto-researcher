@@ -1,6 +1,6 @@
 <!--- Agentic Crypto Researcher - README.md -->
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![License](https://img.shields.io/badge/License-CC_BY--NC_4.0-lightgrey.svg)
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.95+-009688.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-13+-black.svg)
@@ -145,7 +145,8 @@ Contributions welcome. Open an issue or PR with clear description and tests wher
 
 ## License
 
-MIT
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0). 
+**Non-commercial use only.** You may not use this material for commercial purposes without prior written permission from the developers.
 
 ## Disclaimer
 
