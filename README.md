@@ -6,6 +6,11 @@
 ![Next.js](https://img.shields.io/badge/Next.js-13+-black.svg)
 ![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED.svg)
 
+<br />
+
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://agentic-crypto-researcher.vercel.app/)
+[![API Docs](https://img.shields.io/badge/🤗_Hugging_Face-Backend_API-FFD21E?style=for-the-badge&logo=huggingface)](https://huggingface.co/spaces/jacobbista/agentic-crypto-researcher/tree/main)
+
 # Agentic Crypto Researcher
 
 Agentic Crypto Researcher is a full-stack AI application that autonomously researches, analyzes, and summarizes cryptocurrency market data using a visible agentic loop (Plan → Tools → Observations → Synthesis). It demonstrates a Tool-Augmented RAG pattern (retrieval via tools/APIs rather than a vector DB) and streams the agent’s reasoning to the UI.
@@ -91,6 +96,8 @@ npm run dev
 
 Backend (Hugging Face Space)
 
+**Live URL:** [Access API](https://huggingface.co/spaces/jacobbista/agentic-crypto-researcher/tree/main)
+
 The repo includes a Dockerfile for deployment to Hugging Face Spaces.
 
 Steps:
@@ -104,6 +111,8 @@ Steps:
 
 Frontend (Vercel)
 
+**Live URL:** [Launch App](https://agentic-crypto-researcher.vercel.app/)
+
 1. Import the `frontend/` directory into Vercel.
 2. Configure environment variables:
    - `BACKEND_URL`: your backend URL (e.g., a Hugging Face Space URL)
@@ -113,6 +122,8 @@ Frontend (Vercel)
 Security pattern
 
 This project implements a Shared Secret pattern. When `BACKEND_SHARED_SECRET` is set on both frontend and backend, the frontend sends an `X-Internal-Auth` header. The backend rejects requests missing this header to protect API usage and credits.
+
+> **Note**: Access to the UI is gated via `APP_AUTH_TOKENS`. To request a temporary access token for testing purposes, please contact the development team.
 
 ## Example: Research Flow
 
